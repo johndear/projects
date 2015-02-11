@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/commons-io-1.4.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-lang-2.5.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="lib/commons-beanutils-1.8.3.jar"/>
+	<classpathentry kind="lib" path="lib/commons-collections-3.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-dbcp-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-pool-1.5.4.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.jdt.core_3.10.0.v20140604-1726.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.pde.ui_3.8.101.v20140902-1534.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.ui.forms_3.6.100.v20140422-1825 (1).jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.core.resources-3.7.100.v20110510-0712.jar"/>
+	<classpathentry kind="lib" path="lib/freemarker-2.3.20.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Administrator.2013-20140716HD/Desktop/org.eclipse.e4.ui.workbench.addons.swt_1.1.1.v20140903-0821.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

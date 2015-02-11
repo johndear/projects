@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Slave4j
+Bundle-SymbolicName: org.slave4j;singleton:=true
+Bundle-Version: 1.0.0
+Bundle-Activator: org.slave4j.Activator
+Require-Bundle: org.eclipse.ui,org.eclipse.core.runtime,org.eclipse.co
+ re.resources,org.eclipse.jdt.core,org.eclipse.ui.ide
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ClassPath: .,
+ lib/commons-io-1.4.jar,
+ lib/commons-lang-2.5.jar,
+ lib/freemarker-2.3.20.jar
+
