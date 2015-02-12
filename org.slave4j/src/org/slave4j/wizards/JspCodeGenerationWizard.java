@@ -17,6 +17,7 @@ import org.slave4j.bean.JsTemplateArgs;
 import org.slave4j.bean.JspTemplateArgs;
 import org.slave4j.templates.JsTemplate;
 import org.slave4j.templates.JspListTemplate;
+import org.slave4j.templates.JspListV2Template;
 
 public class JspCodeGenerationWizard extends Wizard implements INewWizard {
 	private JspCodeGenerationWizardPage page;
@@ -53,6 +54,7 @@ public class JspCodeGenerationWizard extends Wizard implements INewWizard {
 				monitor.beginTask("代码生成", 100);
 
 				JspListTemplate jspListTemplate = new JspListTemplate();
+				JspListV2Template jspListV2Template = new JspListV2Template();
 				JsTemplate jsTemplate = new JsTemplate();
 
 				monitor.worked(1);
@@ -64,7 +66,7 @@ public class JspCodeGenerationWizard extends Wizard implements INewWizard {
 					String filePath = directoryPath + "/" + jspName + ".jsp";
 					Tools.createFile(filePath);
 
-					String jspCode = jspListTemplate.generate(jspTemplateArgs);
+					String jspCode = jspListV2Template.generate(jspTemplateArgs);
 					Tools.writeStringToFile(filePath, jspCode);
 				}
 

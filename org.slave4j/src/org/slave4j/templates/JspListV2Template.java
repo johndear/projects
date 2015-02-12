@@ -9,7 +9,7 @@ import org.slave4j.bean.EntityFieldInfo;
 import org.slave4j.bean.JspTemplateArgs;
 import org.slave4j.templates.util.FreeMarkertUtil;
 
-public class JspListTemplate {
+public class JspListV2Template {
 	protected static String nl;
 	public final String NL = nl == null ? System.getProperties().getProperty("line.separator") : nl;
 
@@ -36,7 +36,7 @@ public class JspListTemplate {
 		
 		
 		Map<String, Object> dataModel = new HashMap<String, Object>();
-		dataModel.put("ctx", "${ctx }");
+		dataModel.put("${ctx }", "${ctx }");
 		dataModel.put("modeName", modeName!=null?modeName:"");
 		dataModel.put("entityObjectName", entityObjectName);
 		dataModel.put("thHtml", stringBuffer.toString());
