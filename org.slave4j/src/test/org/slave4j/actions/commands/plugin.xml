@@ -2,52 +2,6 @@
 <?eclipse version="3.4"?>
 <plugin>
 
-	<extension
-         point="org.eclipse.ui.actionSets">
-      <actionSet
-            label="操作集"
-            visible="true"
-            id="org.slave4j.actionSet1">
-         <menu
-               icon="icons/logo.gif"
-               id="org.slave4j.menu1"
-               label="slave4j">
-            <separator
-                  name="group1">
-            </separator>
-         </menu>
-		 <action
-               class="org.slave4j.actions.OpenExplorerAction"
-               enablesFor="1"
-               icon="icons/open_explorer.gif"
-               id="org.slave4j.actions.OpenExplorerAction"
-               label="打开所在的文件夹"
-               menubarPath="org.slave4j.menu1/group1"
-               toolbarPath="group1"
-               tooltip="打开所在的文件夹">
-         </action>
-      </actionSet>
-   </extension>
-   <extension
-         point="org.eclipse.ui.popupMenus">
-      <objectContribution
-            id="org.slave4j.contribution1"
-            objectClass="org.eclipse.jdt.core.IJavaElement">
-         <menu
-               icon="icons/logo.gif"
-               id="org.slave4j.menu2"
-               label="slave4j"
-               path="additions">
-            <separator
-                  name="group1">
-            </separator>
-            <separator
-                  name="group2">
-            </separator>
-         </menu>
-         </objectContribution>
-   </extension>
-
    <extension
          point="org.eclipse.ui.commands">
       <category
