@@ -2,156 +2,115 @@ package org.slave4j.wizards;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.IPackageFragment;
 import org.eclipse.jdt.core.IPackageFragmentRoot;
 import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
-import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.slave4j.Activator;
-import org.slave4j.ProjectBean;
-import org.slave4j.Tools;
-import org.slave4j.bean.ClassNameInfo;
-import org.slave4j.bean.JavaTemplateArgs;
-import org.slave4j.bean.JspTemplateArgs;
-import org.slave4j.templates.ActionTemplate;
-import org.slave4j.templates.DaoTemplate;
-import org.slave4j.templates.JspInputTemplate;
-import org.slave4j.templates.JspListTemplate;
-import org.slave4j.templates.ServiceTemplate;
+import org.slave4j.bean.JavaBean;
+import org.slave4j.bean.JspBean;
+import org.slave4j.bean.ProjectBean;
+import org.slave4j.util.JavaTemplateGenerator;
+import org.slave4j.util.JspTemplateGenerator;
+import org.slave4j.util.Tools;
 
-public class CodeGenerationWizard extends Wizard
-  implements INewWizard
-{
-  private CodeGenerationWizardPage page;
-  private ISelection selection;
-  private ProjectBean projectVo;
-  private List<JavaTemplateArgs> javaTemplateArgsList;
-  private List<JspTemplateArgs> jspTemplateArgsList;
+public class CodeGenerationWizard extends Wizard implements INewWizard {
+	private ISelection selection;
+	private ProjectBean projectVo;
+	private List<JavaBean> javaTemplateArgsList;
+	private List<JspBean> jspTemplateArgsList;
 
-  public CodeGenerationWizard()
-  {
-    setNeedsProgressMonitor(true);
-    setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons/wizard.jpg"));
-    setWindowTitle("代码生成");
-  }
+	public CodeGenerationWizard() {
+		setNeedsProgressMonitor(true);
+		setDefaultPageImageDescriptor(Activator.getImageDescriptor("icons/wizard.jpg"));
+		setWindowTitle("代码生成");
+	}
 
-  public void addPages()
-  {
-    this.page = new CodeGenerationWizardPage(this.selection);
-    addPage(this.page);
-  }
+	@Override
+	public void addPages() {
+		CodeGenerationWizardPage page = new CodeGenerationWizardPage(this.selection);
+		page.setTitle("代码生成");
+		page.setDescription("相应的包名设置");
+		addPage(page);
+	}
+	
+	@Override
+	public void init(IWorkbench arg0, IStructuredSelection selection) {
+		try {
+			this.selection = selection;
+			this.projectVo = new ProjectBean(selection);
+			this.javaTemplateArgsList = Tools.loadJavaTemplateListFromEntity(selection);
+			this.jspTemplateArgsList = Tools.loadJspTemplateListFromEntity(selection);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-  public boolean performFinish()
-  {
-    IRunnableWithProgress op = new IRunnableWithProgress()
-    {
-      public void run(IProgressMonitor monitor) throws InvocationTargetException
-      {
-        monitor.beginTask("代码生成", 100);
+	@Override
+	public boolean performFinish() {
+		final JavaTemplateGenerator generator = new JavaTemplateGenerator();
+		final JspTemplateGenerator jspGenerator = new JspTemplateGenerator();
+		
+		IRunnableWithProgress op = new IRunnableWithProgress() {
+			public void run(IProgressMonitor monitor) throws InvocationTargetException {
+				monitor.beginTask("代码生成", 100);
+				monitor.worked(1);
+				monitor.subTask("java代码生成");
+				for (JavaBean javaTemplateArgs : javaTemplateArgsList) {
+					String javaCode = generator.generate(javaTemplateArgs);
 
-        DaoTemplate daoTemplate = new DaoTemplate();
-        ServiceTemplate serviceTemplate = new ServiceTemplate();
-        ActionTemplate actionTemplate = new ActionTemplate();
-        JspListTemplate jspListTemplate = new JspListTemplate();
-        JspInputTemplate jspInputTemplate = new JspInputTemplate();
+					try {
+						// 生成java类
+						IPackageFragmentRoot packageFragmentRoot = projectVo.getJavaProject().findPackageFragmentRoot(new Path("/" + projectVo.getName() + "/src"));
+						IPackageFragment packageFragment = packageFragmentRoot.getPackageFragment(javaTemplateArgs.getPackageName());
+						if (!packageFragment.exists()) {
+							packageFragment = packageFragmentRoot.createPackageFragment(javaTemplateArgs.getPackageName(),true, null);
+						}
+						packageFragment.createCompilationUnit(javaTemplateArgs.getClassName() + ".java",javaCode, true, new NullProgressMonitor());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
 
-        monitor.worked(1);
-        monitor.subTask("java代码生成");
-        for (JavaTemplateArgs javaTemplateArgs : javaTemplateArgsList)
-        {
-          try
-          {
-            IPackageFragmentRoot packageFragmentRoot = CodeGenerationWizard.this.projectVo.getJavaProject().findPackageFragmentRoot(new Path("/" + CodeGenerationWizard.this.projectVo.getName() + "/src"));
-            IPackageFragment packageFragment = packageFragmentRoot.getPackageFragment(javaTemplateArgs.getPackageName());
-            if (!packageFragment.exists())
-            {
-              packageFragment = packageFragmentRoot.createPackageFragment(javaTemplateArgs.getPackageName(), true, null);
-            }
+				monitor.worked(1);
+				monitor.subTask("jsp和js代码生成");
+				for (JspBean jspTemplateArgs : jspTemplateArgsList) {
+					if (jspTemplateArgs != null) {
+						String directoryPath = projectVo.getWebInf() + "/jsp/";
+						Tools.createDirectory(directoryPath);
 
-            String javaCode = "";
-            switch (javaTemplateArgs.getType().ordinal())
-            {
-            case 0:
-              javaCode = daoTemplate.generate(javaTemplateArgs);
-              break;
-            case 1:
-              javaCode = serviceTemplate.generate(javaTemplateArgs);
-              break;
-            case 2:
-              javaCode = actionTemplate.generate(javaTemplateArgs);
-            }
+						String jspFilePath = directoryPath + "/" + jspTemplateArgs.getModeName() + "/" + jspTemplateArgs.getJspName() + ".jsp";
+						String jsFilePath = directoryPath + "/" + jspTemplateArgs.getModeName() + "/" + jspTemplateArgs.getJspName() + ".js";
+						Tools.createFile(jspFilePath);
+						Tools.createFile(jsFilePath);
 
-            packageFragment.createCompilationUnit(javaTemplateArgs.getClassName() + ".java", javaCode, true, new NullProgressMonitor());
-          }
-          catch (Exception e) {
-            e.printStackTrace();
-          }
-        }
+						String jspCode = jspGenerator.generateJsp(jspTemplateArgs);
+						String jsCode = jspGenerator.generateJs(jspTemplateArgs);
+						Tools.writeStringToFile(jspFilePath, jspCode);
+						Tools.writeStringToFile(jsFilePath, jsCode);
+					}
+				}
+				
+				monitor.done();
+			}
 
-        monitor.worked(1);
-        monitor.subTask("jsp代码生成");
-        for (JspTemplateArgs jspTemplateArgs : jspTemplateArgsList)
-        {
-          String directoryPath = CodeGenerationWizard.this.projectVo.getWebInf() + "/jsp/" + jspTemplateArgs.getModeName() + "/" + jspTemplateArgs.getClassNameInfo().getEntityObjectName();
-          Tools.createDirectory(directoryPath);
-
-          String filePath = directoryPath + "/" + jspTemplateArgs.getJspName();
-          Tools.createFile(filePath);
-
-          String jspCode = "";
-          switch (jspTemplateArgs.getType().ordinal())
-          {
-          case 1:
-            jspCode = jspListTemplate.generate(jspTemplateArgs);
-            break;
-          case 2:
-            jspCode = jspInputTemplate.generate(jspTemplateArgs);
-            break;
-          }
-
-          Tools.writeStringToFile(filePath, jspCode);
-        }
-        monitor.done();
-      }
-
-    };
-    try
-    {
-      getContainer().run(true, false, op);
-    }
-    catch (InvocationTargetException e) {
-      e.printStackTrace();
-      return false;
-    }
-    catch (InterruptedException e) {
-      e.printStackTrace();
-      return false;
-    }
-
-    this.projectVo.refresh();
-
-    return true;
-  }
-
-  public void init(IWorkbench workbench, IStructuredSelection selection)
-  {
-    this.selection = selection;
-    this.projectVo = new ProjectBean(selection);
-    try
-    {
-      this.javaTemplateArgsList = Tools.createJavaTemplateArgsList(selection);
-      this.jspTemplateArgsList = Tools.createJspTemplateArgsList(selection);
-    }
-    catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+		};
+		
+		try {
+			getContainer().run(true, false, op);
+			this.projectVo.refresh();
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

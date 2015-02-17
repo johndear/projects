@@ -25,30 +25,26 @@
 							<form>
 								<table class="input_table">
 									<tbody>
-										<tr>
-											<td class="input_tt">请购单主题：</td>
-											<td class="w30">
-												<input id="planTopic"  type="text">
-											</td>
-											<td class="input_tt">请购单编号：</td>
-											<td class="w30">
-												<input id="planNo"  type="text" >
-											</td>
-										</tr>
-										<tr>
-											<td class="input_tt">项目属性：</td>
-											<td colspan="">
-												<select id="projectAttr" name="projectAttr">
-													<option value="">请选择</option>
-													<option value="1">成本类</option>
-													<option value="2">投资类</option>
-												</select>
-											</td>
-											<td class="input_tt">状态：</td>
-											<td class="center">
-												<div id="status"></div>
-											</td>
-										</tr>
+										<#if columnDatas?size != 0>
+											<#assign sIndex=1/>
+											<#list columnDatas as list>
+												<#if sIndex%2==1 >
+													<tr>
+														<td class="input_tt">${list.fieldDesc}：</td>
+														<td class="w30">
+															<input id="${list.fieldName}"  type="text">
+														</td>
+												</#if>
+												<#if sIndex%2==0 >
+													<td class="input_tt">${list.fieldDesc}：</td>
+														<td class="w30">
+															<input id="${list.fieldName}"  type="text" >
+														</td>
+													</tr>
+												</#if>
+												<#assign sIndex=sIndex+1/>
+											</#list>
+										</#if>
 										<tr>
 											<td class="input_tt">创建日期从：</td>
 											<td>

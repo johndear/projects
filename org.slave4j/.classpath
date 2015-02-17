@@ -15,6 +15,6 @@
 	<classpathentry kind="lib" path="lib/org.eclipse.ui.forms_3.6.100.v20140422-1825 (1).jar"/>
 	<classpathentry kind="lib" path="lib/org.eclipse.core.resources-3.7.100.v20110510-0712.jar"/>
 	<classpathentry kind="lib" path="lib/freemarker-2.3.20.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Administrator.2013-20140716HD/Desktop/org.eclipse.e4.ui.workbench.addons.swt_1.1.1.v20140903-0821.jar"/>
+	<classpathentry kind="lib" path="lib/mysql-connector-java-5.1.22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

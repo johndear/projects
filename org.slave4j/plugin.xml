@@ -17,40 +17,67 @@
             </separator>
          </menu>
          <action
-               class="org.slave4j.test.CreateJavaAction"
+               class="org.slave4j.actions.CreateJavaAction"
                enablesFor="1"
-               id="org.slave4j.test.CreateJavaAction"
+               id="org.slave4j.actions.CreateJavaAction"
                label="新建java"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
                tooltip="新建java">
          </action>
          <action
-               class="org.slave4j.popup.actions.JspCodeGenerationAction"
+               class="org.slave4j.actions.JspCodeGenerationAction"
                enablesFor="1"
-               id="org.slave4j.popup.actions.JspCodeGenerationAction"
+               id="org.slave4j.actions.JspCodeGenerationAction"
                label="新建jsp"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
                tooltip="新建jsp">
          </action>
          <action
-               class="org.slave4j.popup.actions.CodeGenerationAction"
+               class="org.slave4j.actions.CodeGenerationAction"
                enablesFor="1"
-               id="org.slave4j.popup.actions.CodeGenerationAction"
-               label="自动生成"
+               id="org.slave4j.actions.CodeGenerationAction"
+               label="由javabean生成dao、service、action、jsp"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
                tooltip="自动生成">
          </action>
-          <action
-               class="org.slave4j.popup.actions.BuildEnvironmentAction"
+         <action
+               class="org.slave4j.actions.CodeGenerationAction"
                enablesFor="1"
-               id="org.slave4j.popup.actions.BuildEnvironmentAction"
-               label="搭建spring"
+               id="org.slave4j.actions.CodeGenerationAction"
+               label="一键构建ssj框架"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
-               tooltip="搭建spring">
+               tooltip="一键构建ssj框架">
+         </action>
+         <action
+               class="org.slave4j.actions.CodeGenerationAction"
+               enablesFor="1"
+               id="org.slave4j.actions.CodeGenerationAction"
+               label="一键构建ssi框架"
+               menubarPath="org.slave4j.menu1/group1"
+               toolbarPath="group1"
+               tooltip="一键构建ssi框架">
+         </action>
+         <action
+               class="org.slave4j.actions.CodeGenerationAction"
+               enablesFor="1"
+               id="org.slave4j.actions.CodeGenerationAction"
+               label="一键构建ssh框架"
+               menubarPath="org.slave4j.menu1/group1"
+               toolbarPath="group1"
+               tooltip="一键构建ssh框架">
+         </action>
+          <action
+               class="org.slave4j.actions.BuildEnvironmentAction"
+               enablesFor="1"
+               id="org.slave4j.actions.BuildEnvironmentAction"
+               label="一键构建spring框架"
+               menubarPath="org.slave4j.menu1/group1"
+               toolbarPath="group1"
+               tooltip="一键构建spring框架">
          </action>
           <action
                class="org.slave4j.actions.OpenExplorerAction"
@@ -111,62 +138,5 @@
          </action>
       </objectContribution>
    </extension>
-
-   <extension
-         point="org.eclipse.ui.commands">
-      <category
-            name="Liusu Category"
-            id="test1.commands.category">
-      </category>
-      <command
-            name="Liusu Command"
-            categoryId="test1.commands.category"
-            id="test1.commands.sampleCommand">
-      </command>
-   </extension>
-   <extension
-         point="org.eclipse.ui.handlers">
-      <handler
-            commandId="test1.commands.sampleCommand"
-            class="org.slave4j.SampleHandler">
-      </handler>
-   </extension>
-   <extension
-         point="org.eclipse.ui.bindings">
-      <key
-            commandId="test1.commands.sampleCommand"
-            contextId="org.eclipse.ui.contexts.window"
-            sequence="M1+8"
-            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
-      </key>
-   </extension>
-   <extension
-         point="org.eclipse.ui.menus">
-      <menuContribution
-            locationURI="menu:org.eclipse.ui.main.menu?after=additions">
-         <menu
-               label="Liusu1 Menu"
-               mnemonic="M"
-               id="test1.menus.sampleMenu">
-            <command
-                  commandId="test1.commands.sampleCommand"
-                  mnemonic="S"
-                  id="test1.menus.sampleCommand">
-            </command>
-         </menu>
-      </menuContribution>
-      <menuContribution
-            locationURI="toolbar:org.eclipse.ui.main.toolbar?after=additions">
-         <toolbar
-               id="test1.toolbars.sampleToolbar">
-            <command
-                  commandId="test1.commands.sampleCommand"
-                  icon="icons/sample.gif"
-                  tooltip="Say hello world"
-                  id="test1.toolbars.sampleCommand">
-            </command>
-         </toolbar>
-      </menuContribution>
-   </extension>
-
+   
 </plugin>
