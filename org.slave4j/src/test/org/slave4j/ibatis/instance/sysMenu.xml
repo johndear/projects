@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="sys_menu" >
+
+  <resultMap id="BaseResultMap" class="test.org.slave4j.ibatis.instance.SysMenu" >
+		   	<result column="id" property="id" jdbcType="int" />
+		   	<result column="name" property="name" jdbcType="varchar" />
+		   	<result column="url" property="url" jdbcType="varchar" />
+		   	<result column="parentid" property="parentid" jdbcType="int" />
+		   	<result column="deleted" property="deleted" jdbcType="int" />
+		   	<result column="createtime" property="createtime" jdbcType="datetime" />
+		   	<result column="updatetime" property="updatetime" jdbcType="datetime" />
+		   	<result column="rank" property="rank" jdbcType="int" />
+		   	<result column="actions" property="actions" jdbcType="varchar" />
+  </resultMap>
+  
+  <select id="selectAll" resultMap="BaseResultMap" parameterClass="test.org.slave4j.ibatis.instance.SysMenu" >
+    select
+			id,
+			name,
+			url,
+			parentid,
+			deleted,
+			createtime,
+			updatetime,
+			rank,
+			actions,
+	'0' as row 
+    from sys_menu
+  </select>
+  
+</sqlMap>
