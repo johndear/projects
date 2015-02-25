@@ -47,37 +47,37 @@
                class="org.slave4j.actions.CodeGenerationAction"
                enablesFor="1"
                id="org.slave4j.actions.CodeGenerationAction"
-               label="一键构建ssj框架"
+               label="构建ssj框架"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
-               tooltip="一键构建ssj框架">
+               tooltip="构建ssj框架">
          </action>
          <action
                class="org.slave4j.actions.CodeGenerationAction"
                enablesFor="1"
                id="org.slave4j.actions.CodeGenerationAction"
-               label="一键构建ssi框架"
+               label="构建ssi框架"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
-               tooltip="一键构建ssi框架">
+               tooltip="构建ssi框架">
          </action>
          <action
                class="org.slave4j.actions.CodeGenerationAction"
                enablesFor="1"
                id="org.slave4j.actions.CodeGenerationAction"
-               label="一键构建ssh框架"
+               label="构建ssh框架"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
-               tooltip="一键构建ssh框架">
+               tooltip="构建ssh框架">
          </action>
           <action
                class="org.slave4j.actions.BuildEnvironmentAction"
                enablesFor="1"
                id="org.slave4j.actions.BuildEnvironmentAction"
-               label="一键构建spring框架"
+               label="构建spring框架"
                menubarPath="org.slave4j.menu1/group1"
                toolbarPath="group1"
-               tooltip="一键构建spring框架">
+               tooltip="构建spring框架">
          </action>
           <action
                class="org.slave4j.actions.OpenExplorerAction"
