@@ -4,8 +4,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.util.Map;
 
-import org.slave4j.util.JavaTemplateGenerator;
-
+import test.org.slave4j.ibatis.template.JDBCUtil;
 import freemarker.cache.ClassTemplateLoader;
 import freemarker.cache.MultiTemplateLoader;
 import freemarker.cache.TemplateLoader;
@@ -20,8 +19,9 @@ public class FreeMarkertUtil {
 		try {
 //			config.setClassForTemplateLoading(ActionTemplate.class, "");
 //			FileTemplateLoader loader1 = new FileTemplateLoader(new File(ActionTemplate.class.getResource("../").toURI()));
+			ClassTemplateLoader loader1 = new ClassTemplateLoader(JDBCUtil.class,"");
 			ClassTemplateLoader loader2 = new ClassTemplateLoader(FreeMarkertUtil.class,"");
-			TemplateLoader[] loaders = {loader2};
+			TemplateLoader[] loaders = {loader1,loader2};
 			MultiTemplateLoader mtl = new MultiTemplateLoader(loaders);
 			config.setTemplateLoader(mtl);
 			tpl = config.getTemplate(templateName);
